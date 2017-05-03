@@ -31,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -45,9 +46,16 @@ public class UserService {
         return userMapper.select(user);
     }
 
-
     public int insert(User user) {
        return userMapper.insert(user);
+    }
+
+
+    public List<User> getAllByXml(User user){
+        if (user.getPageSize() != null && user.getPageNum() != null) {
+            PageHelper.startPage(user.getPageNum(), user.getPageSize());
+        }
+        return userMapper.getAllByXml(user.getUsername());
     }
 
 
